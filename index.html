@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="refresh" content="180">
+<script>setTimeout(function(){ location.reload(); }, 180000);</script>
+<title>JIO RDT Tool - Summary Report</title>
+<style>
+  body { font-family: Segoe UI, Arial, sans-serif; margin: 24px; color: #222; background:#fafafa; }
+  h1 { font-size: 20px; margin-bottom: 4px; }
+  .meta { color: #666; font-size: 13px; margin-bottom: 16px; }
+  table { border-collapse: collapse; width: 100%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+  th, td { border: 1px solid #ddd; padding: 6px 10px; font-size: 13px; text-align: center; white-space: nowrap; }
+  th { background: #333; color: #fff; position: sticky; top: 0; }
+  tr.odd { background: #FFFBEA; }
+  tr.even { background: #ffffff; }
+  tr.pass td { color: #1a7f37; }
+  tr.fail td { color: #c0392b; font-weight: bold; }
+  td.empty { color: #999; font-style: italic; }
+  .tabs { display: flex; gap: 4px; margin-bottom: 0; border-bottom: 2px solid #333; }
+  .tab-btn { padding: 8px 18px; font-size: 14px; font-weight: bold; border: 1px solid #ccc; border-bottom: none;
+              background: #e6e6e6; color: #555; cursor: pointer; border-radius: 6px 6px 0 0; }
+  .tab-btn.active { background: #333; color: #fff; }
+  .tab-pane { display: none; padding-top: 16px; }
+  .tab-pane.active { display: block; }
+  .kv-table { max-width: 520px; }
+  .kv-table td { text-align: left; white-space: normal; }
+  .kv-table td.kv-label { font-weight: bold; width: 220px; background: #f2f2f2; }
+  .kv-table td.kv-value { font-size: 14px; }
+  .dashboard { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: auto auto; gap: 16px; margin-bottom: 20px; }
+  .gauge-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .gauge-title { font-size: 11px; color: #888; letter-spacing: .06em; text-transform: uppercase; font-weight: bold; }
+  .gauge-svg { width: 140px; height: 80px; }
+  .gauge-value { font-size: 20px; font-weight: bold; color: #222; text-align: center; }
+  .gauge-sub { font-size: 11px; color: #aaa; text-align: center; }
+  .flap-list { width: 100%; display: flex; flex-direction: column; gap: 3px; max-height: 120px; overflow-y: auto; }
+  .flap-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 8px; border-radius: 5px; background: #fff8e1; }
+  .flap-dut { font-weight: bold; color: #e65100; font-size: 12px; }
+  .flap-time { color: #bf360c; font-size: 11px; }
+</style>
+</head>
+<body>
+  <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
+    <h1 style="margin:0;">JIO RDT Tool - Summary Report</h1>
+    <button style="padding:4px 12px; font-size:13px; font-weight:bold; border:1px solid #1976D2; border-radius:6px; background:#2196F3; color:#fff; cursor:pointer;" onclick="location.reload()">&#8635; Refresh</button>
+    <span id="rdt-status-btn" style="display:inline-flex; align-items:center; gap:6px; padding:4px 12px; font-size:13px; font-weight:bold; border:1px solid #ccc; border-radius:6px; background:#f5f5f5; color:#333;">
+      <span id="rdt-status-dot" style="width:10px;height:10px;border-radius:50%;background:#9e9e9e;display:inline-block;"></span>
+      <span id="rdt-status-text">RDT Tool: checking...</span>
+    </span>
+  </div>
+  <div class="meta">Generated: 2026-09-11 21:35:23 &nbsp;|&nbsp; Cycle 27 / 6000
+    &nbsp;|&nbsp; Last updated: 2026-09-13 03:52:49 &nbsp;|&nbsp; ⚡ in 3 min</div>
+
+
+  <div class="dashboard">
+    <!-- LEFT: Duration -->
+    <div class="gauge-card">
+      <div class="gauge-title">Test duration</div>
+      <svg class="gauge-svg" viewBox="0 0 140 80" aria-label="Test duration gauge">
+        <path d="M10,75 A60,60 0 0,1 130,75" stroke="#e0e0e0" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <path d="M10,75 A60,60 0 0,1 10.1,71.0" stroke="#1976D2" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <polyline points="70,75 20.1,71.7" stroke="#1976D2" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <circle cx="70" cy="75" r="5" fill="#1976D2"/>
+        <text x="6"   y="74" font-size="9" fill="#aaa" text-anchor="middle">0d</text>
+        <text x="70"  y="12" font-size="9" fill="#aaa" text-anchor="middle">30d</text>
+        <text x="134" y="74" font-size="9" fill="#aaa" text-anchor="middle">60d</text>
+      </svg>
+      <div class="gauge-value">1d 6h 17m</div>
+      <div class="gauge-sub">max 60 days</div>
+    </div>
+    <!-- 2ND: Pass Round -->
+    <div class="gauge-card">
+      <div class="gauge-title">Pass round</div>
+      <svg class="gauge-svg" viewBox="0 0 140 80" aria-label="Pass round gauge">
+        <path d="M10,75 A60,60 0 0,1 130,75" stroke="#e0e0e0" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <path d="M10,75 A60,60 0 0,1 10.0,73.5" stroke="#00838f" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <polyline points="70,75 20.0,73.7" stroke="#00838f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <circle cx="70" cy="75" r="5" fill="#00838f"/>
+        <text x="6"   y="74" font-size="9" fill="#aaa" text-anchor="middle">0</text>
+        <text x="70"  y="12" font-size="9" fill="#aaa" text-anchor="middle">50%</text>
+        <text x="134" y="74" font-size="9" fill="#aaa" text-anchor="middle">240000</text>
+      </svg>
+      <div class="gauge-value">1948 / 240000</div>
+      <div class="gauge-sub" style="color:#00838f;">0.8% pass rate</div>
+    </div>
+    <!-- 3RD: Pass Cycle -->
+    <div class="gauge-card">
+      <div class="gauge-title">Pass cycle</div>
+      <svg class="gauge-svg" viewBox="0 0 140 80" aria-label="Pass cycle gauge">
+        <path d="M10,75 A60,60 0 0,1 130,75" stroke="#e0e0e0" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <path d="M10,75 A60,60 0 0,1 10.0,74.1" stroke="#2e7d32" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <polyline points="70,75 20.0,74.2" stroke="#2e7d32" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <circle cx="70" cy="75" r="5" fill="#2e7d32"/>
+        <text x="6"   y="74" font-size="9" fill="#aaa" text-anchor="middle">0</text>
+        <text x="70"  y="12" font-size="9" fill="#aaa" text-anchor="middle">50%</text>
+        <text x="134" y="74" font-size="9" fill="#aaa" text-anchor="middle">6000</text>
+      </svg>
+      <div class="gauge-value">30 / 6000</div>
+      <div class="gauge-sub" style="color:#2e7d32;">0.5% pass rate</div>
+    </div>
+    <!-- RIGHT TOP: eth0 Flapping -->
+    <div class="gauge-card" style="grid-row: 1 / 2; grid-column: 4;">
+      <div class="gauge-title">eth0 flapping</div>
+      <div class="gauge-value" style="margin-top:4px;">11 DUTs / 54 events</div>
+      <div class="flap-list"><div class="flap-row" style="flex-direction:column; align-items:flex-start; gap:2px;"><div style="display:flex; justify-content:space-between; width:100%;"><span class="flap-dut">DUT25</span><span class="flap-time">15 times</span></div><div style="font-size:10px; color:#bf360c; word-break:break-word;">09-12 22:42 / 09-12 19:48 / 09-12 18:35 / 09-12 17:41 / 09-12 16:30 / 09-12 13:12 / 09-12 12:20 / 09-12 11:00 / 09-11 20:18 / 09-11 19:20 / 09-11 18:18 / 09-10 19:12 / 09-10 17:54 / 09-10 16:57 / 09-10 14:43</div></div><div class="flap-row" style="flex-direction:column; align-items:flex-start; gap:2px;"><div style="display:flex; justify-content:space-between; width:100%;"><span class="flap-dut">DUT1</span><span class="flap-time">6 times</span></div><div style="font-size:10px; color:#bf360c; word-break:break-word;">09-12 22:23 / 09-12 17:01 / 09-11 19:48 / 09-11 17:50 / 09-11 12:27 / 09-10 18:41</div></div><div class="flap-row" style="flex-direction:column; align-items:flex-start; gap:2px;"><div style="display:flex; justify-content:space-between; width:100%;"><span class="flap-dut">DUT29</span><span class="flap-time">7 times</span></div><div style="font-size:10px; color:#bf360c; word-break:break-word;">09-12 19:51 / 09-12 18:57 / 09-12 17:44 / 09-12 16:33 / 09-12 13:15 / 09-12 12:23 / 09-12 11:03</div></div><div class="flap-row" style="flex-direction:column; align-items:flex-start; gap:2px;"><div style="display:flex; justify-content:space-between; width:100%;"><span class="flap-dut">DUT35</span><span class="flap-time">7 times</span></div><div style="font-size:10px; color:#bf360c; word-break:break-word;">09-12 19:13 / 09-12 17:59 / 09-12 16:45 / 09-12 12:36 / 09-11 19:37 / 09-11 18:34 / 09-10 19:24</div></div><div class="flap-row" style="flex-direction:column; align-items:flex-start; gap:2px;"><div style="display:flex; justify-content:space-between; width:100%;"><span class="flap-dut">DUT24</span><span class="flap-time">4 times</span></div><div style="font-size:10px; color:#bf360c; word-break:break-word;">09-12 18:33 / 09-12 17:20 / 09-12 16:08 / 09-12 10:59</div></div><div class="flap-row" style="flex-direction:column; align-items:flex-start; gap:2px;"><div style="display:flex; justify-content:space-between; width:100%;"><span class="flap-dut">DUT23</span><span class="flap-time">2 times</span></div><div style="font-size:10px; color:#bf360c; word-break:break-word;">09-12 13:09 / 09-10 17:52</div></div><div class="flap-row" style="flex-direction:column; align-items:flex-start; gap:2px;"><div style="display:flex; justify-content:space-between; width:100%;"><span class="flap-dut">DUT17</span><span class="flap-time">4 times</span></div><div style="font-size:10px; color:#bf360c; word-break:break-word;">09-11 20:53 / 09-11 20:02 / 09-10 20:46 / 09-10 17:40</div></div><div class="flap-row" style="flex-direction:column; align-items:flex-start; gap:2px;"><div style="display:flex; justify-content:space-between; width:100%;"><span class="flap-dut">DUT3</span><span class="flap-time">2 times</span></div><div style="font-size:10px; color:#bf360c; word-break:break-word;">09-11 19:50 / 09-11 16:35</div></div><div class="flap-row" style="flex-direction:column; align-items:flex-start; gap:2px;"><div style="display:flex; justify-content:space-between; width:100%;"><span class="flap-dut">DUT42</span><span class="flap-time">1 time</span></div><div style="font-size:10px; color:#bf360c; word-break:break-word;">09-11 18:41</div></div><div class="flap-row" style="flex-direction:column; align-items:flex-start; gap:2px;"><div style="display:flex; justify-content:space-between; width:100%;"><span class="flap-dut">DUT5</span><span class="flap-time">4 times</span></div><div style="font-size:10px; color:#bf360c; word-break:break-word;">09-11 16:37 / 09-11 13:20 / 09-11 12:32 / 09-11 10:21</div></div><div class="flap-row" style="flex-direction:column; align-items:flex-start; gap:2px;"><div style="display:flex; justify-content:space-between; width:100%;"><span class="flap-dut">DUT37</span><span class="flap-time">2 times</span></div><div style="font-size:10px; color:#bf360c; word-break:break-word;">09-10 19:26 / 09-10 18:33</div></div></div>
+    </div>
+    <!-- RIGHT BOTTOM: Sensor / GPS Retry -->
+    <div class="gauge-card" style="grid-row: 2 / 3; grid-column: 4;">
+      <div class="gauge-title">Sensor / GPS retry</div>
+      <div class="gauge-value" style="margin-top:4px;color:#880e4f;">1 DUT / 1 event</div>
+      <div class="flap-list"><div class="flap-row" style="background:#fce4ec; flex-direction:column; align-items:flex-start; gap:2px;"><div style="display:flex; justify-content:space-between; width:100%;"><span class="flap-dut" style="color:#880e4f;">DUT22</span><span style="font-size:11px; color:#880e4f;">1 time</span></div><div style="font-size:10px; color:#880e4f; word-break:break-word;">09-10 14:35 [GPS]</div></div></div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="rdtShowTab('live', this)">Live / Current Cycle</button>
+    <button class="tab-btn" onclick="rdtShowTab('daily', this)">Daily Summary</button>
+    <button class="tab-btn" onclick="rdtShowTab('overall', this)">Overall Test Summary</button>
+  </div>
+
+  <div id="tab-live" class="tab-pane active">
+    <table>
+      <thead><tr><th>DUT</th><th>Uptime</th><th>GPS</th><th>ISM330 Test</th><th>ISM330 Raw</th><th>LIS2MDL Test</th><th>LIS2MDL Raw</th><th>CPU Usage(%)</th><th>eth0 tx</th><th>eth0 rx</th><th>eth1 tx</th><th>eth1 rx</th><th>Fail Items</th></tr></thead>
+      <tbody><tr class="odd pass"><td>DUT1</td><td>7:55</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>88</td><td>439.59 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT2</td><td>3 days, 12:29</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>62</td><td>439.59 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT3</td><td>3 days, 12:29</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>31</td><td>98.20 Mbit/s</td><td>98.08 Mbit/s</td><td>655.65 Mbit/s</td><td>1.26 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT4</td><td>3 days, 12:30</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>27</td><td>439.58 Mbit/s</td><td>109.56 Mbit/s</td><td>838.26 Mbit/s</td><td>1.09 Gbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT5</td><td>15:45</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>91</td><td>439.60 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT6</td><td>3 days, 12:32</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>71</td><td>439.61 Mbit/s</td><td>109.57 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT7</td><td>3 days, 12:33</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>86</td><td>439.64 Mbit/s</td><td>109.58 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT8</td><td>3 days, 12:33</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>62</td><td>439.59 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT9</td><td>3 days, 12:34</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>85</td><td>439.62 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT10</td><td>3 days, 12:34</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>63</td><td>439.61 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT11</td><td>3 days, 12:35</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>84</td><td>439.64 Mbit/s</td><td>109.57 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT12</td><td>3 days, 12:35</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>62</td><td>439.59 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT13</td><td>3 days, 12:26</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>82</td><td>439.61 Mbit/s</td><td>109.57 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT14</td><td>3 days, 12:27</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>62</td><td>439.54 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT15</td><td>3 days, 12:27</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>79</td><td>439.57 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT16</td><td>3 days, 12:27</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>64</td><td>439.60 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="odd fail"><td>DUT17</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>CONNECTION / EXCEPTION</td></tr><tr class="even pass"><td>DUT18</td><td>3 days, 12:28</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>16</td><td>439.56 Mbit/s</td><td>109.55 Mbit/s</td><td>109.56 Mbit/s</td><td>439.59 Mbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT19</td><td>3 days, 12:28</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>78</td><td>439.60 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT20</td><td>3 days, 12:29</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>63</td><td>439.63 Mbit/s</td><td>109.57 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT21</td><td>1 day, 13:54</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>85</td><td>439.60 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT22</td><td>3 days, 12:29</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>63</td><td>439.59 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="odd fail"><td>DUT23</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>CONNECTION / EXCEPTION</td></tr><tr class="even pass"><td>DUT24</td><td>3 days, 12:30</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>13</td><td>98.20 Mbit/s</td><td>98.07 Mbit/s</td><td>98.09 Mbit/s</td><td>439.59 Mbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT25</td><td>3 days, 12:31</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>79</td><td>439.59 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT26</td><td>3 days, 12:31</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>63</td><td>439.65 Mbit/s</td><td>109.57 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT27</td><td>3 days, 12:31</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>85</td><td>439.61 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT28</td><td>3 days, 12:32</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>63</td><td>439.60 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT29</td><td>3 days, 12:32</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>23</td><td>439.58 Mbit/s</td><td>109.56 Mbit/s</td><td>627.20 Mbit/s</td><td>1.06 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT30</td><td>3 days, 12:33</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>25</td><td>98.20 Mbit/s</td><td>98.07 Mbit/s</td><td>405.49 Mbit/s</td><td>995.62 Mbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT31</td><td>3 days, 12:34</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>94</td><td>439.62 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT32</td><td>3 days, 12:34</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>65</td><td>439.60 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT33</td><td>3 days, 12:34</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>88</td><td>439.70 Mbit/s</td><td>109.59 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT34</td><td>3 days, 12:35</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>61</td><td>439.58 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="odd fail"><td>DUT35</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>CONNECTION / EXCEPTION</td></tr><tr class="even pass"><td>DUT36</td><td>3 days, 12:35</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>19</td><td>439.60 Mbit/s</td><td>109.56 Mbit/s</td><td>109.56 Mbit/s</td><td>439.59 Mbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT37</td><td>3 days, 12:36</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>88</td><td>439.63 Mbit/s</td><td>109.57 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT38</td><td>3 days, 12:36</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>62</td><td>439.62 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="odd pass"><td>DUT39</td><td>3 days, 12:36</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>85</td><td>439.71 Mbit/s</td><td>109.59 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr><tr class="even pass"><td>DUT40</td><td>3 days, 12:37</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>PASS</td><td>58</td><td>439.60 Mbit/s</td><td>109.56 Mbit/s</td><td>1.21 Gbit/s</td><td>1.54 Gbit/s</td><td>-</td></tr></tbody>
+    </table>
+  </div>
+
+  <div id="tab-daily" class="tab-pane">
+    <table>
+      <thead><tr><th>Date</th><th>Cycles Completed</th><th>DUT Tests</th><th>Pass</th><th>Fail</th><th>Pass Rate</th></tr></thead>
+      <tbody><tr class="odd fail"><td>2026-09-13</td><td>4</td><td>184</td><td>172</td><td>12</td><td>93.5%</td></tr><tr class="even fail"><td>2026-09-12</td><td>19</td><td>874</td><td>856</td><td>18</td><td>97.9%</td></tr><tr class="odd pass"><td>2026-09-11</td><td>14</td><td>644</td><td>644</td><td>0</td><td>100.0%</td></tr><tr class="even pass"><td>2026-09-10</td><td>6</td><td>276</td><td>276</td><td>0</td><td>100.0%</td></tr></tbody>
+    </table>
+  </div>
+
+  <div id="tab-overall" class="tab-pane">
+    <table class="kv-table">
+      <tbody>
+      <tr><td class="kv-label">Start date</td><td class="kv-value">2026/09/11 21:35</td></tr>
+      <tr><td class="kv-label">Duration</td><td class="kv-value">1 day(s) 6 hr 17 min</td></tr>
+      <tr><td class="kv-label">Pass cycle</td><td class="kv-value">30 / 43 (69.8%)</td></tr>
+      <tr><td class="kv-label">Pass round</td><td class="kv-value">1948 / 1978 (98.5%)</td></tr>
+      <tr><td class="kv-label">Test failed DUT#</td><td class="kv-value">DUT17, DUT23, DUT35</td></tr>
+    </tbody>
+    </table>
+  </div>
+
+  <script>
+    // ✅ RDT Tool running status
+    // 優先檢查 heartbeat 的狀態字串：
+    //   "stopped by user" / "closed by user" → 直接顯示 Not Running
+    //   "alive" → 用時間差判斷（HTML 產生時間 - heartbeat 時間 <= 門檻）
+    var HEARTBEAT_TS     = "2026-09-13 03:52:28";
+    var HEARTBEAT_STATUS = "alive";
+    var HTML_GEN_TS      = "2026-09-13 03:52:49";
+    var THRESHOLD_SEC    = 240;
+
+    function updateRdtStatus() {
+      var dot  = document.getElementById('rdt-status-dot');
+      var text = document.getElementById('rdt-status-text');
+
+      // 明確停止的狀態 → 直接 Not Running，不看時間
+      if (HEARTBEAT_STATUS === "stopped by user" || HEARTBEAT_STATUS === "closed by user") {
+        dot.style.background = '#f44336';
+        text.textContent = 'RDT Tool: Not Running';
+        return;
+      }
+
+      if (!HEARTBEAT_TS || !HTML_GEN_TS) {
+        dot.style.background = '#9e9e9e';
+        text.textContent = 'RDT Tool: unknown';
+        return;
+      }
+
+      var hbTime  = new Date(HEARTBEAT_TS.replace(' ', 'T'));
+      var genTime = new Date(HTML_GEN_TS.replace(' ', 'T'));
+      var diffSec = (genTime - hbTime) / 1000;
+      if (diffSec <= THRESHOLD_SEC) {
+        dot.style.background = '#4caf50';
+        text.textContent = 'RDT Tool: Running';
+      } else {
+        dot.style.background = '#f44336';
+        text.textContent = 'RDT Tool: Not Running';
+      }
+    }
+    updateRdtStatus();
+
+    function rdtShowTab(name, btn) {
+      document.querySelectorAll('.tab-pane').forEach(function(el) { el.classList.remove('active'); });
+      document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.remove('active'); });
+      document.getElementById('tab-' + name).classList.add('active');
+      btn.classList.add('active');
+      try { localStorage.setItem('rdt_active_tab', name); } catch(e) {}
+    }
+    // 頁面載入時還原上次的 tab
+    (function() {
+      try {
+        var last = localStorage.getItem('rdt_active_tab');
+        if (last) {
+          var pane = document.getElementById('tab-' + last);
+          var btn  = document.querySelector('.tab-btn[onclick*="' + last + '"]');
+          if (pane && btn) {
+            document.querySelectorAll('.tab-pane').forEach(function(el) { el.classList.remove('active'); });
+            document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.remove('active'); });
+            pane.classList.add('active');
+            btn.classList.add('active');
+          }
+        }
+      } catch(e) {}
+    })();
+  </script>
+</body>
+</html>
